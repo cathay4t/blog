@@ -49,11 +49,20 @@ The brief difference between IPv6-RA and DHCPv6 are:
 
  * NTP:
     * IPv6-RA: Do not provide NTP time server configuration.
-    * DHCPv6: [DHCP server provides the NTP configuration to
-      hosts][rfc-dhcpv6-ntp]
+    * DHCPv6: DHCP server [provides][rfc-dhcpv6-ntp] the NTP configuration to
+      hosts.
 
+## TODO
 
+ * Add dnsmasq config.
 
+ * Add RADVD config.
+
+ * Add example lab setup and outputs.
+
+ * Add NetworkManager example on configuring IPv6 auto conf.
+
+ * Add nmstate example on IPv6 auto conf.
 
 [rfc-ipv6-ra]: https://tools.ietf.org/html/rfc4861
 [rfc-dhcpv6]: https://tools.ietf.org/html/rfc8415
