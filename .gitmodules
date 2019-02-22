@@ -1,0 +1,7 @@
+[submodule "public"]
+	path = public
+	url = https://github.com/cathay4t/cathay4t.github.io.git
+	branch = master
+[submodule "themes/m10c"]
+	path = themes/m10c
+	url = https://github.com/vaga/hugo-theme-m10c.git
