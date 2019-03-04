@@ -3,6 +3,18 @@ title: "DRAFT/WIP: IPv6 Automatic Configuration in Linux"
 date: 2019-02-22T23:55:13+08:00
 draft: false
 ---
+<!-- vim-markdown-toc GFM -->
+
+* [IPv4 vs IPv6 on Automatic Configuration](#ipv4-vs-ipv6-on-automatic-configuration)
+* [Server side configuration: dnsmasq](#server-side-configuration-dnsmasq)
+* [Server side configuration: radvd](#server-side-configuration-radvd)
+* [Client side configuration using nmstate](#client-side-configuration-using-nmstate)
+* [Client side configuration using NetworkManager](#client-side-configuration-using-networkmanager)
+* [Client side configuration manually](#client-side-configuration-manually)
+
+<!-- vim-markdown-toc -->
+
+## IPv4 vs IPv6 on Automatic Configuration
 
 In world of IPv4, DHCPv4 provides a perfect way for IPv4 automatic
 configuration including IP address, DNS and routing entires.
@@ -52,17 +64,135 @@ The brief difference between IPv6-RA and DHCPv6 are:
     * DHCPv6: DHCP server [provides][rfc-dhcpv6-ntp] the NTP configuration to
       hosts.
 
-## TODO
+## Server side configuration: dnsmasq
 
- * Add dnsmasq config.
+The `dnsmasq` project provide IPv6-RA and DHCPv6 with simple configuration for
+common use cases.
 
- * Add RADVD config.
+For more detail, please refer to manpage of `dnsmasq`.
+A quick example would be:
 
- * Add example lab setup and outputs.
+```conf
+# Enable IPv6-RA
+enable-ra
+# Use the IPv6 prefix on eth1 interaface, and 0x1 to 0xff as DHCPv6 range.
+dhcp-range=tag:eth1,::1,::ff,constructor:eth1,ra-names,64,48h
+```
 
- * Add NetworkManager example on configuring IPv6 auto conf.
+Above configuration are using `ra-names` method for DHCP range, as a result,
+the host will get:
+ * A /64 address generated using [SLAAC][rfc-slaac] algorithm. Ignore the
+   DHCPv6 range setting.
+ * A /128 address chose by DHCPv6 server from above DHCPv6 range.
+   And this address if pingable, will be the DNS AAAA entry for the host.
+ * The DNS options and defaults routes get from IPv6-RA.
+   Host might use DHCPv6 for DNS option if [DNS RA options][rfc-ipv6-ra-dns]
+   is not supported.
 
- * Add nmstate example on IPv6 auto conf.
+Example output on the host(The DHCPv6 server has the `2001:db8:1::1` address):
+```
+[fge@fed ~]$ ip -6 addr show dev  ens10
+3: ens10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1280 state UP qlen 1000
+    inet6 2001:db8:1::1f/128 scope global dynamic noprefixroute
+       valid_lft 6932sec preferred_lft 6632sec
+    inet6 2001:db8:1:0:415b:bc93:c47b:76c8/64 scope global dynamic noprefixroute
+       valid_lft 172754sec preferred_lft 172754sec
+    inet6 fe80::db63:c3ff:b814:f4e2/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+
+[fge@fed ~]$ ip -6 route show dev ens10
+2001:db8:1::1f proto kernel metric 102 pref medium
+2001:db8:1::/64 proto ra metric 102 pref medium
+fe80::/64 proto kernel metric 102 pref medium
+default via fe80::be2b:a3e2:2b5a:2e7d proto ra metric 102 pref medium
+
+[fge@fed ~]$ cat /etc/resolv.conf |grep :
+nameserver fe80::be2b:a3e2:2b5a:2e7d%ens10
+nameserver 2001:db8:1::1
+
+[fge@fed ~]$ host -t AAAA fed 2001:db8:1::1
+Using domain server:
+Name: 2001:db8:1::1
+Address: 2001:db8:1::1#53
+Aliases:
+
+fed has IPv6 address 2001:db8:1::1f
+```
+
+## Server side configuration: radvd
+
+The `radvd` provide feature-rich support of IPv6-RA and allowing you to do
+those thins which `dnsmasq` does not support yet:
+
+ * Advertise more routes.
+ * Customize IPv6-RA options.
+
+For more detail, please refer to manpage of `dnsmasq`.
+
+```
+interface eth1
+{
+    AdvSendAdvert on;
+    MinRtrAdvInterval 30;
+    MaxRtrAdvInterval 100;
+    prefix 2001:db8:1::/64 {    # Host will use SLAAC for this prefix
+        AdvOnLink on;
+        AdvAutonomous on;
+        AdvRouterAddr off;
+    };
+    route ::/0 {};              # Host will get default gateway
+    route 2001:db8:f::/64 {};   # Host will get this optional stateless route
+    RDNSS 2001:db8:1::1 {};     # Host will get nameserver as 2001:db8:1::1
+};
+```
+
+## Client side configuration using nmstate
+
+The `nmstate` project provides simple way to set network state.
+
+For example: to enable auto configuration on eth1 for IPv4 and IPv6:
+
+```bash
+echo '
+---
+interfaces:
+- name: eth1
+  type: ethernet
+  state: up
+  ipv4:
+    dhcp: true
+    auto-dns: true
+    auto-gateway: true
+    auto-routes: true
+    enabled: true
+  ipv6:
+    autoconf: true
+    dhcp: true
+    auto-dns: true
+    auto-gateway: true
+    auto-routes: true
+    enabled: true
+  mtu: 1500
+' | sudo nmstatectl set -
+```
+
+Then you may use command `nmstatectl  show eth1` to get the current network
+state of `eth1`.
+
+## Client side configuration using NetworkManager
+
+With NetworkManager daemon running, the below simple command would enable both
+IPv4 and IPv6 automatic configuration on `eth1`:
+
+```bash
+sudo nmcli connection add type ethernet \
+    ifname eth1 \
+    +connection.id auto-eth1 \
+    +ipv4.method auto \
+    +ipv6.method auto
+```
+
+## Client side configuration manually
 
 [rfc-ipv6-ra]: https://tools.ietf.org/html/rfc4861
 [rfc-dhcpv6]: https://tools.ietf.org/html/rfc8415
