@@ -3,17 +3,6 @@ title: "DRAFT/WIP: IPv6 Automatic Configuration in Linux"
 date: 2019-02-22T23:55:13+08:00
 draft: false
 ---
-<!-- vim-markdown-toc GFM -->
-
-* [IPv4 vs IPv6 on Automatic Configuration](#ipv4-vs-ipv6-on-automatic-configuration)
-* [Server side configuration: dnsmasq](#server-side-configuration-dnsmasq)
-* [Server side configuration: radvd](#server-side-configuration-radvd)
-* [Client side configuration using nmstate](#client-side-configuration-using-nmstate)
-* [Client side configuration using NetworkManager](#client-side-configuration-using-networkmanager)
-* [Client side configuration manually](#client-side-configuration-manually)
-
-<!-- vim-markdown-toc -->
-
 ## IPv4 vs IPv6 on Automatic Configuration
 
 In world of IPv4, DHCPv4 provides a perfect way for IPv4 automatic
@@ -64,7 +53,7 @@ The brief difference between IPv6-RA and DHCPv6 are:
     * DHCPv6: DHCP server [provides][rfc-dhcpv6-ntp] the NTP configuration to
       hosts.
 
-## Server side configuration: dnsmasq
+### Server side configuration: dnsmasq
 
 The `dnsmasq` project provide IPv6-RA and DHCPv6 with simple configuration for
 common use cases.
@@ -119,7 +108,7 @@ Aliases:
 fed has IPv6 address 2001:db8:1::1f
 ```
 
-## Server side configuration: radvd
+### Server side configuration: radvd
 
 The `radvd` provide feature-rich support of IPv6-RA and allowing you to do
 those thins which `dnsmasq` does not support yet:
@@ -146,7 +135,7 @@ interface eth1
 };
 ```
 
-## Client side configuration using nmstate
+### Client side configuration using nmstate
 
 The `nmstate` project provides simple way to set network state.
 
@@ -179,7 +168,7 @@ interfaces:
 Then you may use command `nmstatectl  show eth1` to get the current network
 state of `eth1`.
 
-## Client side configuration using NetworkManager
+### Client side configuration using NetworkManager
 
 With NetworkManager daemon running, the below simple command would enable both
 IPv4 and IPv6 automatic configuration on `eth1`:
@@ -192,7 +181,9 @@ sudo nmcli connection add type ethernet \
     +ipv6.method auto
 ```
 
-## Client side configuration manually
+### Client side configuration manually
+
+TODO
 
 [rfc-ipv6-ra]: https://tools.ietf.org/html/rfc4861
 [rfc-dhcpv6]: https://tools.ietf.org/html/rfc8415
