@@ -55,7 +55,7 @@ The brief difference between IPv6-RA and DHCPv6 are:
 
 ### Server side configuration: dnsmasq
 
-The `dnsmasq` project provide IPv6-RA and DHCPv6 with simple configuration for
+The `dnsmasq` project provides IPv6-RA and DHCPv6 with simple configuration for
 common use cases.
 
 For more detail, please refer to manpage of `dnsmasq`.
@@ -70,6 +70,7 @@ dhcp-range=tag:eth1,::1,::ff,constructor:eth1,ra-names,64,48h
 
 Above configuration are using `ra-names` method for DHCP range, as a result,
 the host will get:
+
  * A /64 address generated using [SLAAC][rfc-slaac] algorithm. Ignore the
    DHCPv6 range setting.
  * A /128 address chose by DHCPv6 server from above DHCPv6 range.
