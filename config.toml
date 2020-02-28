@@ -6,6 +6,7 @@ theme = "m10c"
 [params]
 author = "Gris Ge <cnfourt@gmail.com>"
 description = "Some people dream of success, while other people get up every morning and make it happen."
+avatar = "avatar.png"
 
 [[params.social]]
 name = "github"
