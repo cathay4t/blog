@@ -1,5 +1,5 @@
 ---
-title: "DRAFT/WIP: IPv6 Automatic Configuration in Linux"
+title: "IPv6 Automatic Configuration in Linux"
 date: 2019-02-22T23:55:13+08:00
 draft: false
 ---
@@ -184,7 +184,23 @@ sudo nmcli connection add type ethernet \
 
 ### Client side configuration manually
 
-TODO
+For IPv6/IPv4 DHCP, you need to use `dhclient`, `dhcpcd` or `NetworkManager` or
+any DHCP client tools.
+
+For IPv6 Router Advertisement, you may enable/disable it via
+```bash
+# Disable
+sudo sysctl -w net.ipv6.conf.eth1.accept_ra=0
+# Enable
+sudo sysctl -w net.ipv6.conf.eth1.accept_ra=1
+```
+
+You may also need to enable IPv6 manually
+
+```bash
+sudo sysctl -w net.ipv6.conf.eth1.disable_ipv6=0
+```
+
 
 [rfc-ipv6-ra]: https://tools.ietf.org/html/rfc4861
 [rfc-dhcpv6]: https://tools.ietf.org/html/rfc8415
