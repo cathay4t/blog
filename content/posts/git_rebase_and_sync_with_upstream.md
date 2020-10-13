@@ -2,7 +2,6 @@
 title: "Git: rebase and sync with upstream"
 date: 2020-03-19T01:04:35+08:00
 ---
-## Git: rebase and sync with upstream
 
 I have been asked to do rebase on git branch a lot, so I create some scripts
 to help me so.
@@ -15,24 +14,39 @@ git remote add upstream <link_to_upstream.git>
 ```
 
 Then place this script in your `$PATH`(for example: `$HOME/bin`) as
-`git_sync_upstream` which will sync `origin/master` with `upstream/master`.
+`git_sync_upstream` which will sync `origin` with `upstream`.
 
 ```bash
 #!/bin/bash -x
-git commit  -m'wip' -a      # In case have uncommit work in current branch.
+#!/bin/bash -x
+if [ "CHK$(git branch|grep ' master' )" != "CHK" ];then
+    BASE_BRANCH="master"
+elif [ "CHK$(git branch|grep ' main' )" != "CHK" ];then
+    BASE_BRANCH="main"
+else
+    BASE_BRANCH="base"
+fi
+git commit  -m'wip' -a
 git fetch || exit 1
 git fetch upstream || exit 1
-git checkout master || exit 1
-git reset --hard upstream/master
-git push origin +master
+git checkout $BASE_BRANCH || exit 1
+git reset --hard upstream/$BASE_BRANCH
+git push origin +$BASE_BRANCH
 ```
 
-Now create save script as `rebase`:
+Now create script as `rebase`:
 
 ```bash
-#!/bin/bash -xe
+#!/bin/bash -e
 
 CUR_BRANCH=`git rev-parse --abbrev-ref HEAD`
+if [ "CHK$(git branch|grep ' master' )" != "CHK" ];then
+    BASE_BRANCH="master"
+elif [ "CHK$(git branch|grep ' main' )" != "CHK" ];then
+    BASE_BRANCH="main"
+else
+    BASE_BRANCH="base"
+fi
 
 if [ "CHK$CUR_BRANCH" == "CHK" ];then
     echo "Failed to get current branch name"
@@ -41,6 +55,6 @@ fi
 
 git_sync_upstream
 git checkout $CUR_BRANCH
-git rebase upstream/master
+git rebase $BASE_BRANCH
 git push --force
 ```
