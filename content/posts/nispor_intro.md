@@ -34,7 +34,7 @@ In short, existing solutions is not simple enough:
  * Varlink interface.
  * Best effort on point-in-time consistence of network state.
  * Command line tool for debugging or scripting.
- * Supporting these types of network interface:
+ * Supporting:
      * IPv4/IPv6 address
      * Bond
      * Linux Bridge
