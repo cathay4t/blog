@@ -54,50 +54,42 @@ In short, existing solutions is not simple enough:
 
 The output of `npc bond99` would be:
 
-```json
-{
-  "name": "bond99",
-  "iface_type": "Bond",
-  "state": "Up",
-  "mtu": 1500,
-  "flags": [
-    "Broadcast",
-    "LowerUp",
-    "Controller",
-    "Multicast",
-    "Running",
-    "Up"
-  ],
-  "ipv6": {
-    "addresses": [
-      {
-        "address": "fe80::942c:a7ff:fe56:683c",
-        "prefix_len": 64,
-        "valid_lft": "forever",
-        "preferred_lft": "forever"
-      }
-    ]
-  },
-  "mac_address": "96:2C:A7:56:68:3C",
-  "bond": {
-    "subordinates": [
-      "eth1",
-      "eth2"
-    ],
-    "mode": "balance-rr",
-    "miimon": 0,
-    "updelay": 0,
-    "downdelay": 0,
-    "use_carrier": true,
-    "arp_interval": 0,
-    "arp_all_targets": "any",
-    "arp_validate": "none",
-    "resend_igmp": 1,
-    "all_subordinates_active": "dropped",
-    "packets_per_subordinate": 1,
-    "peer_notif_delay": 0
-  }
-}
+```yaml
+---
+- name: bond99
+  iface_type: Bond
+  state: Up
+  mtu: 1500
+  flags:
+    - Broadcast
+    - LowerUp
+    - Controller
+    - Multicast
+    - Running
+    - Up
+  ipv6:
+    addresses:
+      - address: "fe80::942c:a7ff:fe56:683c"
+        prefix_len: 64
+        valid_lft: forever
+        preferred_lft: forever
+  mac_address: "96:2C:A7:56:68:3C"
+  bond:
+    subordinates:
+      - eth1
+      - eth2
+    mode: balance-rr
+    miimon: 0
+    updelay: 0
+    downdelay: 0
+    use_carrier: true
+    arp_interval: 0
+    arp_all_targets: any
+    arp_validate: none
+    resend_igmp: 1
+    all_subordinates_active: dropped
+    packets_per_subordinate: 1
+    peer_notif_delay: 0
 ```
 
 ## Future of Nispor
