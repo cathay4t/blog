@@ -1,6 +1,6 @@
 ---
 title: "250HZ kernel Will Act Differently for Linux Bridge"
-date: 2020-11-24T19:44:29+08:00
+date: 2020-11-24T21:44:41+08:00
 ---
 
 When playing with Linux Bridge in Ubuntu 18.04(Travis CI), I noticed
@@ -42,7 +42,8 @@ Above formation will generate 3124 with 7812 jiffies on `250HZ` kernel and
 100HZ(hard coded) `USER_HZ`.
 
 Below python script could check the maximum deviation caused by round up
-of `jiffies_to_clock_t()` in 250HZ kernel.
+of `jiffies_to_clock_t()` in 250HZ kernel. I only found the maximum deviation
+as 1 for a very long exhaustion.
 
 
 ```python
