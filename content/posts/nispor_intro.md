@@ -94,8 +94,7 @@ The output of `npc bond99` would be:
 
 ## Future of Nispor
 
-I am hoping nispor could provide sufficient features for its command line tool
--- `npc` could be drop-in replacement of `iproute`.
+ * Support applying network configure.
 
 ## How to Contribute
 
