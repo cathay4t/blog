@@ -1,5 +1,5 @@
 ---
-title: "Nispor: Varlink interface for querying network state"
+title: "Nispor: Unified interface for querying network state"
 date: 2020-10-13T22:00:14+08:00
 ---
 
@@ -31,7 +31,6 @@ In short, existing solutions is not simple enough:
  * Rust crate.
  * C binding written in rust
  * Python binding written in Python using the c binding above.
- * Varlink interface.
  * Best effort on point-in-time consistence of network state.
  * Command line tool for debugging or scripting.
  * Supporting:
