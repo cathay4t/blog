@@ -1,26 +1,26 @@
 ---
-title: "Nmstate: Convert temporary iproute network configuration to persistent"
+title: "Nmstate: Convert temporary iproute network configuration to persist"
 date: 2021-06-10T16:20:06+08:00
 ---
 
 The network configuration done by [iproute][iproute_url] will be removed
-after reboot. People are using they own scripts or service to persistent their
+after reboot. People are using they own scripts or service to persist their
 network configurations.
 
 Starting version 1.0, [Nmstate][nmstate_url] supports converting network
-created by iproute to persistent with the help of [Nispor][nispor_url] and
-[NetworkManager][nm_url]:
+configuration created by iproute to persist with the help of
+[Nispor][nispor_url] and [NetworkManager][nm_url]:
  * Nispor query current network configurations from kernel.
  * Nmstate instruct NetworkManager to save the network configure in persistent
    way.
 
-Only single command required:
+Only a single command required:
 
 ```bash
 sudo nmstatectl show | sudo nmstatectl apply -
 ```
 
-Please been noted: bond in "active_backup" mode with `fail_over_mac=active`
+Please note: bond in "active_backup" mode with `fail_over_mac=active`
 option does not allow MAC address been set explicitly, you need to remove
 it manually before asking nmstate to apply it:
 
@@ -32,7 +32,7 @@ sudo nmstatectl apply bond0.yml
 
 ## Example
 
-Assume you create a bond and hope to persistent it.
+Assume you create a bond and hope to persist it.
 
 ```bash
 sudo ip link add bond0 type bond
