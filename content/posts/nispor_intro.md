@@ -98,11 +98,11 @@ The output of `npc iface bond99` would be:
 ## How to Contribute
 
  * [Simple good first issues of Nispor][nispor_first_issue]
- * Contact `Gris` via IRC of [FreeNode][web_irc] or email <fge@redhat.com> for
+ * Contact `Gris` via IRC of [Libera][web_irc] or email <fge@redhat.com> for
    helps.
 
 [ip_route_link]: https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
 [nm_link]: https://wiki.gnome.org/Projects/NetworkManager
 [nispor_first_issue]: https://github.com/nispor/nispor/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
-[web_irc]: http://webchat.freenode.net/
+[web_irc]: https://web.libera.chat/
 [nispor_url]: https://github.com/nispor/nispor/
