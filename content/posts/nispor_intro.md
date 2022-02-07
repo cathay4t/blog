@@ -51,7 +51,7 @@ In short, existing solutions is not simple enough:
 
 ## How it looks like
 
-The output of `npc bond99` would be:
+The output of `npc iface bond99` would be:
 
 ```yaml
 ---
