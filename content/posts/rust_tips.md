@@ -21,3 +21,9 @@ let a: () = var;
 ```
 
 You will got compile failure with type name of your variable.
+
+## Speed up the compiling with `lld` linker
+
+In Fedora/RHEL/CentOS, you may:
+ * Add this to you `.bashrc`: `export RUSTFLAGS="-C link-arg=-fuse-ld=lld"`
+ * Install `lld`: `sudo dnf install lld -y`
