@@ -14,12 +14,29 @@ while other people get up every morning and make it happen.
 avatar = "avatar.png"
 
 [[params.social]]
+icon = "github"
 name = "github"
 url = "https://github.com/cathay4t"
 
 [params.style]
-darkestColor = "#d35050"
-darkColor = "#212121"
-primaryColor = "#ffffff"
-lightColor = "#a2a2a2"
-lightestColor = "#d3d3d3"
+darkColor = "#000000"
+darkestColor = "#000000"
+lightColor = "#52d052"
+lightestColor = "#72ff72"
+primaryColor = "#a2ffa2"
+
+[markup]
+[markup.highlight]
+anchorLineNos = false
+codeFences = true
+guessSyntax = false
+hl_Lines = ''
+hl_inline = false
+lineAnchors = ''
+lineNoStart = 1
+lineNos = true
+lineNumbersInTable = true
+noClasses = true
+noHl = false
+style = 'monokai'
+tabWidth = 4
