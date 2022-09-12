@@ -23,7 +23,7 @@ darkColor = "#000000"
 darkestColor = "#000000"
 lightColor = "#52d052"
 lightestColor = "#72ff72"
-primaryColor = "#a2ffa2"
+primaryColor = "#008200"
 
 [markup]
 [markup.highlight]
