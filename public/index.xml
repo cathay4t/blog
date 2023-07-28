@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog of Gris</title>
+    <link>https://blog.grisge.info/</link>
+    <description>Recent content on Blog of Gris</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 04 Mar 2022 10:34:16 +0800</lastBuildDate><atom:link href="https://blog.grisge.info/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Linux BPF Filter in DHCP Client</title>
+      <link>https://blog.grisge.info/posts/bpf_for_dhcp_client/</link>
+      <pubDate>Fri, 04 Mar 2022 10:34:16 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/bpf_for_dhcp_client/</guid>
+      <description>During DHCP discovery process, the DHCP network flow is based on UDP when lower IP stack is not ready yet. The user space DHCP client program will need ethernet RAW socket(AF_PACKET, SOCK_RAW) to receive UDP package otherwise kernel will drop the UDP package as IP mismatch.
+Hooking on Ethernet RAW socket requires DHCP client filter out non-DHCP network package in user space which could result a large CPU overhead. The Linux kernel is providing BPF (Berkeley Packet Filter) facility for filtering packages in kernel space before sending to user space.</description>
+    </item>
+    
+    <item>
+      <title>Tips for Rust Coding</title>
+      <link>https://blog.grisge.info/posts/rust_tips/</link>
+      <pubDate>Mon, 15 Nov 2021 13:53:35 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/rust_tips/</guid>
+      <description>Input {:?} quickly in vim Add this line into your vimrc:
+1 autocmd FileType rust inoremap &amp;lt;leader&amp;gt;d {:?} In vim insert mode, if you try \d, vim will convert that into {:?}.
+Find out the type name of specific variable when debugging Add this line to your code
+1 let a: () = var; You will got compile failure with type name of your variable.
+Speed up the compiling with lld linker In Fedora/RHEL/CentOS, you may:</description>
+    </item>
+    
+    <item>
+      <title>Nmstate: Convert temporary iproute network configuration to persist</title>
+      <link>https://blog.grisge.info/posts/nmstate_persistent_network/</link>
+      <pubDate>Thu, 10 Jun 2021 16:20:06 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/nmstate_persistent_network/</guid>
+      <description>The network configuration done by iproute will be removed after reboot. People are using they own scripts or service to persist their network configurations.
+Starting version 1.0, Nmstate supports converting network configuration created by iproute to persist with the help of Nispor and NetworkManager:
+Nispor query current network configurations from kernel. Nmstate instruct NetworkManager to save the network configure in persistent way. Only a single command required:
+1 sudo nmstatectl show | sudo nmstatectl apply - Please note: bond in &amp;ldquo;active_backup&amp;rdquo; mode with fail_over_mac=active option does not allow MAC address been set explicitly, you need to remove it manually before asking nmstate to apply it:</description>
+    </item>
+    
+    <item>
+      <title>Query Ethtool via Netlink Kernel Interface</title>
+      <link>https://blog.grisge.info/posts/ethtool_netlink_intro/</link>
+      <pubDate>Thu, 15 Apr 2021 13:15:25 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/ethtool_netlink_intro/</guid>
+      <description>Besides old ioctl interface of ethtool, the linux kernel also provides netlink interface for controlling ethtool.
+The existing documents does not serve me well on getting my work done, so I hope this blog could help others by demonstrate on querying ethtool PAUSE informations via netlink.
+The libnl has already provided many helper functions regarding communicating through generic netlink interface. But I think the understanding of every bits in netlink message is essential skill set of a good network developer.</description>
+    </item>
+    
+    <item>
+      <title>250HZ kernel Will Act Differently for Linux Bridge</title>
+      <link>https://blog.grisge.info/posts/br_on_250hz_kernel/</link>
+      <pubDate>Tue, 24 Nov 2020 21:44:41 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/br_on_250hz_kernel/</guid>
+      <description>When playing with Linux Bridge in Ubuntu 18.04(Travis CI), I noticed the default value of multicast_startup_query_interval option is 3124 while RHEL/Fedora is 3125:
+Ubuntu 18.04 1 2 3 fge@ubt1804:~$ sudo ip link add br0 type bridge fge@ubt1804:~$ cat /sys/class/net/br0/bridge/multicast_startup_query_interval 3124 RHEL 8.3 1 2 3 [fge@el8 ~]$ sudo ip link add br0 type bridge [fge@el8 ~]$ cat /sys/class/net/br0/bridge/multicast_startup_query_interval 3125 After debug, I confirmed this is caused by integer round up at two places:</description>
+    </item>
+    
+    <item>
+      <title>Nispor: Unified interface for querying network state</title>
+      <link>https://blog.grisge.info/posts/nispor_intro/</link>
+      <pubDate>Tue, 13 Oct 2020 22:00:14 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/nispor_intro/</guid>
+      <description>After battling with Linux Network APIs, I decided to create rust project providing a state describing API for querying linux kernel network state.
+The new project is named as Nispor, in the short of Network Inspector.
+Why Nispor In short, existing solutions is not simple enough:
+iproute The iproute provides json output, but command line output cannot be really called as a library considering the risk of changing format or string.</description>
+    </item>
+    
+    <item>
+      <title>Git: rebase and sync with upstream</title>
+      <link>https://blog.grisge.info/posts/git_rebase_and_sync_with_upstream/</link>
+      <pubDate>Thu, 19 Mar 2020 01:04:35 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/git_rebase_and_sync_with_upstream/</guid>
+      <description>I have been asked to do rebase on git branch a lot, so I create some scripts to help me so.
+First of all, assuming your git repo is a clone of upstream. Please add upstream git link to your current git repo:
+1 git remote add upstream &amp;lt;link_to_upstream.git&amp;gt; Then place this script in your $PATH(for example: $HOME/bin) as git_sync_upstream which will sync origin with upstream.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 #!</description>
+    </item>
+    
+    <item>
+      <title>Thinkpad: Turnoff the mic mute, sound mute and power button LEDs</title>
+      <link>https://blog.grisge.info/posts/disable_thinkpad_leds/</link>
+      <pubDate>Fri, 28 Feb 2020 08:09:14 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/disable_thinkpad_leds/</guid>
+      <description>Thinkpad: Turnoff the mic mute, sound mute and power button LEDs 1 2 3 4 5 #!/bin/bash SYSFS_THINKPAD_LED=&amp;#34;/sys/devices/platform/thinkpad_acpi/leds&amp;#34; for LED in platform::mute platform::micmute tpacpi::power; do echo 0 | sudo tee &amp;#34;$SYSFS_THINKPAD_LED/$LED/brightness&amp;#34; done </description>
+    </item>
+    
+    <item>
+      <title>IPv6 Automatic Configuration in Linux</title>
+      <link>https://blog.grisge.info/posts/ipv6_autoconf_in_linux/</link>
+      <pubDate>Fri, 22 Feb 2019 23:55:13 +0800</pubDate>
+      
+      <guid>https://blog.grisge.info/posts/ipv6_autoconf_in_linux/</guid>
+      <description>IPv4 vs IPv6 on Automatic Configuration In world of IPv4, DHCPv4 provides a perfect way for IPv4 automatic configuration including IP address, DNS and routing entires. In world of IPv6, above works has been split into types:
+Stateless automatic configuration &amp;ndash; IPv6 Router Advertisement(IPv6-RA).
+Stateful automatic configuration &amp;ndash; DHCPv6.
+The IPv6-RA is designed to provides fundamental network configuration to host with minimum cost. The DHCPv6 is designed to provides additional and extensive network configuration.</description>
+    </item>
+    
+  </channel>
+</rss>
