@@ -21,9 +21,9 @@ url = "https://github.com/cathay4t"
 [params.style]
 darkColor = "#000000"
 darkestColor = "#000000"
-lightColor = "#52d052"
-lightestColor = "#72ff72"
-primaryColor = "#008200"
+lightColor = "#1db870"
+lightestColor = "#dbf7da"
+primaryColor = "#72ff72"
 
 [markup]
 [markup.highlight]

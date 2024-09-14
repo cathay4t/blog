@@ -271,5 +271,5 @@ out of box.
 
 Hence, `AsRef()` is preferred here.
 
-[iter_module_doc]: https://doc.rust-lang.org/std/iter/
+[iter_moduel_doc]: https://doc.rust-lang.org/std/iter/
 [iter_doc]: https://doc.rust-lang.org/std/iter/trait.Iterator.html
