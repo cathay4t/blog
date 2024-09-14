@@ -16,8 +16,8 @@ date: 2024-09-14T12:40:49+08:00
 
 <!-- vim-markdown-toc -->
 
-The Rust Trait is my one of my most favor feature in Rust and also
-my a big challenge to most Rust learners.
+The Rust Trait is one of my most favor features in Rust and also
+the biggest obstacle I faced during my rust learning path.
 Whenever I fell I have mastered it by reading Rust books and blogs,
 the compiler still politely remind me the opposite with flooding errors.
 
