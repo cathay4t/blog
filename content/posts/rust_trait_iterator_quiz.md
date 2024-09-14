@@ -68,7 +68,7 @@ is automatically implement if your data type has implemented `Iterator`:
 impl<I: Iterator> IntoIterator for I
 ```
 
-Now, our task is clear: implement [std::iter::Iterator][iter_doc] with:
+Our task is pretty clear now: implement [std::iter::Iterator][iter_doc] with:
 
  * `type Item` indicate the return data type on each iteration.
  * `fn next() -> Option<Self::Item>` to iterate. None will stop the iteration.
@@ -93,15 +93,15 @@ pub(crate) struct BitIterator<T: AsRef<[u8]>> {
 With that, we can use `let data: &[u8] = self.data.as_ref()` to access the
 data to search bits.
 
-Now you can implement the Iterator Trait like:
+You can implement the Iterator Trait like:
 
 ```rust
 impl<T: AsRef<[u8]>> std::iter::Iterator for BitIterator<T> {
 }
 ```
 
-Now, you got everything required. Please stop the reading and code the quiz
-out. Try to understand compiler errors you got during coding and seek for help
+With everything you required mentioned above, please stop the reading and code
+the quiz out. Try to understand compiler errors during coding and seek for help
 from search engine, or other developers.
 
 
@@ -257,12 +257,13 @@ fn main() {
 
 ### Follow-up: Why not use `From` Trait?
 
-Instead of `data.as_ref()`, we can only use `let data: &[u8] = data.into()`.
+Instead of `data.as_ref()`, we can also use `let data: &[u8] = data.into()`
+which still works well.
 
-It still works well. Both `AsRef` and `From` can convert one data type to
-another. But the `AsRef` trait is designed for `cheap reference-to-reference`
-while the `From` trait is targeted for costly conversion. In our case
-`Vec<u8>` to `&[u8]` is a cheap reference-to-reference conversion.
+Both `AsRef` and `From` can convert one data type to another. But the `AsRef`
+trait is designed for `cheap reference-to-reference` while the `From` trait is
+targeted for costly conversion. In our case `Vec<u8>` to `&[u8]` is a cheap
+reference-to-reference conversion.
 
 Meanwhile, many rust native data type as `AsRef<[u8]>` implemented, but no
 `Into<[u8]>`. Using `AsRef` allowing our iterator support more data types
