@@ -228,7 +228,7 @@ If you want to modify it, please store the pending changes and modify it
 after the iterator drooped, for example:
 
 
-```
+```rust
 // SPDX-License-Identifier: Apache-2.0
 
 mod bit_iterator;
